@@ -35,7 +35,7 @@ internal static class CorlibReferences
 
     public static TypeSignature ImportCorlibReference(this ModuleDefinition module, string fullName)
     {
-        return module.DefaultImporter.ImportTypeSignature(typeof(string).Assembly.GetType(fullName));
+        return module.DefaultImporter.ImportTypeSignature(typeof(string).Assembly.GetType(fullName)!);
     }
 
     public static TypeSignature Void(this ModuleDefinition module)

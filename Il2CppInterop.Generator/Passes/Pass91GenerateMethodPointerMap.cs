@@ -43,7 +43,7 @@ public static class Pass91GenerateMethodPointerMap
         using var writer =
             new BinaryWriter(
                 new FileStream(
-                    Path.Combine(options.OutputDir, MethodAddressToTokenMapBase<Assembly, MethodBase>.FileName),
+                    Path.Combine(options.OutputDir!, MethodAddressToTokenMapBase<Assembly, MethodBase>.FileName),
                     FileMode.Create, FileAccess.Write), Encoding.UTF8, false);
         writer.Write(header);
 

@@ -8,7 +8,7 @@ internal static class XrefScanUtil
     private static InitMetadataForMethod ourMetadataInitForMethodDelegate;
     private static IntPtr ourMetadataInitForMethodPointer;
 
-    internal static event Func<(InitMetadataForMethod, IntPtr)> InitRuntimeUtils;
+    /*internal static event Func<(InitMetadataForMethod, IntPtr)> InitRuntimeUtils;*/
 
     internal static unsafe bool CallMetadataInitForMethod(MethodBase method)
     {

@@ -1,3 +1,4 @@
+#nullable enable
 using System.Reflection;
 using Iced.Intel;
 using Il2CppInterop.Common.Attributes;
@@ -31,7 +32,7 @@ public static class XrefScanner
         }
 
         if (cachedAttribute.XrefRangeStart == cachedAttribute.XrefRangeEnd)
-            return Enumerable.Empty<XrefInstance>();
+            return [];
 
         XrefScanMethodDb.CallMetadataInitForMethod(cachedAttribute);
 
@@ -43,7 +44,7 @@ public static class XrefScanner
     {
         var cachedAttribute = methodBase.GetCustomAttribute<CachedScanResultsAttribute>(false);
         if (cachedAttribute == null || cachedAttribute.RefRangeStart == cachedAttribute.RefRangeEnd)
-            return Enumerable.Empty<XrefInstance>();
+            return [];
 
         return XrefScanMethodDb.ListUsers(cachedAttribute);
     }

@@ -151,7 +151,7 @@ public static class Pass89GenerateMethodXrefCache
 
         using var writer =
             new BinaryWriter(
-                new FileStream(Path.Combine(options.OutputDir, MethodXrefScanCache.FileName), FileMode.Create,
+                new FileStream(Path.Combine(options.OutputDir!, MethodXrefScanCache.FileName), FileMode.Create,
                     FileAccess.Write), Encoding.UTF8, false);
         writer.Write(header);
 

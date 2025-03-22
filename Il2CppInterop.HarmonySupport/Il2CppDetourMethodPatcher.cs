@@ -12,6 +12,7 @@ using Il2CppInterop.Runtime.Runtime.VersionSpecific.MethodInfo;
 using Il2CppInterop.Runtime.Startup;
 using Microsoft.Extensions.Logging;
 using MonoMod.Cil;
+using MonoMod.Core.Platforms;
 using MonoMod.Utils;
 using ValueType = Il2CppSystem.ValueType;
 using Void = Il2CppSystem.Void;
@@ -64,7 +65,7 @@ internal unsafe class Il2CppDetourMethodPatcher : MethodPatcher
     private INativeMethodInfoStruct originalNativeMethodInfo;
 
     /// <summary>
-    ///     Constructs a new instance of <see cref="MonoMod.RuntimeDetour.NativeDetour" /> method patcher.
+    ///     Constructs a new instance of <see cref="PlatformTriple.NativeDetour" /> method patcher.
     /// </summary>
     /// <param name="original"></param>
     public Il2CppDetourMethodPatcher(MethodBase original) : base(original) => Init();

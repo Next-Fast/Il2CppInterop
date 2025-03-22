@@ -1,3 +1,4 @@
+#nullable enable
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -9,12 +10,12 @@ public static class Il2CppInteropUtils
     {
         var body = method.GetMethodBody();
         if (body == null) throw new ArgumentException("Target method may not be abstract");
-        var methodModule = method.DeclaringType.Assembly.Modules.Single();
+        var methodModule = method.DeclaringType?.Assembly.Modules.Single();
         foreach (var (opCode, opArg) in MiniIlParser.Decode(body.GetILAsByteArray()))
         {
             if (opCode != OpCodes.Ldsfld) continue;
 
-            var fieldInfo = methodModule.ResolveField((int)opArg, method.DeclaringType.GenericTypeArguments, method.GetGenericArguments());
+            var fieldInfo = methodModule?.ResolveField((int)opArg, method.DeclaringType?.GenericTypeArguments, method.GetGenericArguments());
             if (fieldInfo?.FieldType != typeof(IntPtr)) continue;
 
             if (fieldInfo.Name.StartsWith(prefix)) return fieldInfo;
@@ -26,12 +27,12 @@ public static class Il2CppInteropUtils
         return null;
     }
 
-    public static FieldInfo GetIl2CppMethodInfoPointerFieldForGeneratedMethod(MethodBase method)
+    public static FieldInfo? GetIl2CppMethodInfoPointerFieldForGeneratedMethod(MethodBase method)
     {
         return GetFieldInfoFromMethod(method, "NativeMethodInfoPtr_");
     }
 
-    public static FieldInfo GetIl2CppFieldInfoPointerFieldForGeneratedFieldAccessor(MethodBase method)
+    public static FieldInfo? GetIl2CppFieldInfoPointerFieldForGeneratedFieldAccessor(MethodBase method)
     {
         return GetFieldInfoFromMethod(method, "NativeFieldInfoPtr_");
     }

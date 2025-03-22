@@ -1,20 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <RootNamespace>Il2CppInterop.StructGenerator</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="ClangSharp" Version="10.0.0-beta" />
-    <PackageReference Include="CppAst" Version="0.8.0" />
-    <PackageReference Include="libclang" Version="11.0.0" />
-    <PackageReference Include="libclang.runtime.win-x64" Version="11.0.0" />
-    <PackageReference Include="libClangSharp.runtime.win-x64" Version="10.0.2-beta2" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-    <PackageReference Include="PolySharp" Version="1.14.1">
+    <PackageReference Include="ClangSharp" Version="18.1.0.3" />
+    <PackageReference Include="CppAst" Version="0.21.1" />
+    <PackageReference Include="libclang" Version="18.1.3.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.3" />
+    <PackageReference Include="PolySharp" Version="1.15.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

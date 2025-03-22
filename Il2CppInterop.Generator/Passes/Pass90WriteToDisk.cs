@@ -32,7 +32,7 @@ public static class Pass90WriteToDisk
 
             // Add TargetFrameworkAttribute to the assembly.
             {
-                var importedConstructor = (ICustomAttributeType)module.DefaultImporter.ImportMethod(targetAttributeConstructor);
+                var importedConstructor = (ICustomAttributeType)module.DefaultImporter.ImportMethod(targetAttributeConstructor!);
 
                 CustomAttribute targetFrameworkAttribute = new(importedConstructor, new());
 

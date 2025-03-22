@@ -24,8 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		Documentation\Implementing-Interfaces.md = Documentation\Implementing-Interfaces.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Il2CppInterop.CLI", "Il2CppInterop.CLI\Il2CppInterop.CLI.csproj", "{F5AA88D1-5E62-46B8-A11C-3FAC40C25600}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{771D8BE3-C373-4754-94EA-4A68B117BAEF}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
@@ -52,10 +50,6 @@ Global
 		{F6405B5F-9162-49EA-9C8A-CE1AA0916CF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6405B5F-9162-49EA-9C8A-CE1AA0916CF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6405B5F-9162-49EA-9C8A-CE1AA0916CF3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5AA88D1-5E62-46B8-A11C-3FAC40C25600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5AA88D1-5E62-46B8-A11C-3FAC40C25600}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5AA88D1-5E62-46B8-A11C-3FAC40C25600}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5AA88D1-5E62-46B8-A11C-3FAC40C25600}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE781BD4-650F-4ED8-B615-5CB36E6D476A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE781BD4-650F-4ED8-B615-5CB36E6D476A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE781BD4-650F-4ED8-B615-5CB36E6D476A}.Release|Any CPU.ActiveCfg = Release|Any CPU
