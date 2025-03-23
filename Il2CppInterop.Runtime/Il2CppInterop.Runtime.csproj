@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <PackageReference Include="Iced" Version="1.21.0" />
+    <PackageReference Include="MonoMod.Core" Version="1.2.3" />
     <PackageReference Include="PolySharp" Version="1.15.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

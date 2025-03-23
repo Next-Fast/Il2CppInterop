@@ -9,19 +9,27 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Il2CppInterop.Common;
 using Il2CppInterop.Common.Attributes;
+using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppInterop.Runtime.Runtime;
+using Il2CppInterop.Runtime.Startup;
 using Microsoft.Extensions.Logging;
 
 namespace Il2CppInterop.Runtime;
 
-public static unsafe class IL2CPP
+public static unsafe partial class IL2CPP
 {
     private static readonly Dictionary<string, IntPtr> ourImagesMap = new();
 
     static IL2CPP()
     {
+        if (Il2CppInteropRuntime.Instance.GameAssemblyName != "GameAssembly")
+        {
+            NativeLibrary.SetDllImportResolver(typeof(IL2CPP).Assembly, (libraryName, assembly, searchPath) =>
+                libraryName == "GameAssembly" ? Il2CppInteropRuntime.Instance.Il2CppHandle : IntPtr.Zero);
+        }
+
         var domain = il2cpp_domain_get();
         if (domain == IntPtr.Zero)
         {
@@ -41,8 +49,7 @@ public static unsafe class IL2CPP
 
     internal static IntPtr GetIl2CppImage(string name)
     {
-        if (ourImagesMap.ContainsKey(name)) return ourImagesMap[name];
-        return IntPtr.Zero;
+        return ourImagesMap.TryGetValue(name, out var image) ? image : IntPtr.Zero;
     }
 
     internal static IntPtr[] GetIl2CppImages()
@@ -97,11 +104,11 @@ public static unsafe class IL2CPP
             return NativeStructUtils.GetMethodInfoForMissingMethod(methodName + "(" + string.Join(", ", argTypes) +
                                                                    ")");
 
-        returnTypeName = Regex.Replace(returnTypeName, "\\`\\d+", "").Replace('/', '.').Replace('+', '.');
+        returnTypeName = MyRegex().Replace(returnTypeName, "").Replace('/', '.').Replace('+', '.');
         for (var index = 0; index < argTypes.Length; index++)
         {
             var argType = argTypes[index];
-            argTypes[index] = Regex.Replace(argType, "\\`\\d+", "").Replace('/', '.').Replace('+', '.');
+            argTypes[index] = MyRegex1().Replace(argType, "").Replace('/', '.').Replace('+', '.');
         }
 
         var methodsSeen = 0;
@@ -1014,4 +1021,10 @@ public static unsafe class IL2CPP
 
     [DllImport("GameAssembly", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern void il2cpp_custom_attrs_free(IntPtr ainfo);
+
+
+    [GeneratedRegex(@"\`\d+")]
+    private static partial Regex MyRegex();
+    [GeneratedRegex(@"\`\d+")]
+    private static partial Regex MyRegex1();
 }

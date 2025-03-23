@@ -60,7 +60,7 @@ internal unsafe class Il2CppDetourMethodPatcher : MethodPatcher
     private static readonly List<object> DelegateCache = new();
     private INativeMethodInfoStruct modifiedNativeMethodInfo;
 
-    private IDetour nativeDetour;
+    private IDisposable _nativeDetour;
 
     private INativeMethodInfoStruct originalNativeMethodInfo;
 
@@ -119,11 +119,11 @@ internal unsafe class Il2CppDetourMethodPatcher : MethodPatcher
     public override MethodBase DetourTo(MethodBase replacement)
     {
         // // Unpatch an existing detour if it exists
-        if (nativeDetour != null)
+        if (_nativeDetour != null)
         {
             // Point back to the original method before we unpatch
             modifiedNativeMethodInfo.MethodPointer = originalNativeMethodInfo.MethodPointer;
-            nativeDetour.Dispose();
+            _nativeDetour.Dispose();
         }
 
         // Generate a new DMD of the modified unhollowed method, and apply harmony patches to it
@@ -143,10 +143,9 @@ internal unsafe class Il2CppDetourMethodPatcher : MethodPatcher
         var unmanagedDelegate = unmanagedTrampolineMethod.CreateDelegate(unmanagedDelegateType);
         DelegateCache.Add(unmanagedDelegate);
 
-        nativeDetour =
-            Il2CppInteropRuntime.Instance.DetourProvider.Create(originalNativeMethodInfo.MethodPointer, unmanagedDelegate);
-        nativeDetour.Apply();
-        modifiedNativeMethodInfo.MethodPointer = nativeDetour.OriginalTrampoline;
+        _nativeDetour =
+            Detour.Apply(originalNativeMethodInfo.MethodPointer, unmanagedDelegate,
+                out modifiedNativeMethodInfo.MethodPointer);
 
         // TODO: Add an ILHook for the original unhollowed method to go directly to managedHookedMethod
         // Right now it goes through three times as much interop conversion as it needs to, when being called from managed side

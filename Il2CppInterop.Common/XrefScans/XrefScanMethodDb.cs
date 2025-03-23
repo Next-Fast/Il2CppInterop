@@ -21,16 +21,17 @@ public static class XrefScanMethodDb
         XrefScanCache = new MethodXrefScanCache(GeneratedDatabasesUtil.GetDatabasePath(MethodXrefScanCache.FileName));
 
         foreach (ProcessModule module in Process.GetCurrentProcess().Modules)
-            if (module.ModuleName == "GameAssembly.dll")
+            if (module.ModuleName
+                is "GameAssembly.dll" or "GameAssembly.so" or "GameAssembly.dylib" or "il2cpp.so")
             {
-                GameAssemblyBase = (long)module.BaseAddress;
+                GameAssemblyBase = module.BaseAddress;
                 break;
             }
     }
 
     public static MethodBase TryResolvePointer(IntPtr methodStart)
     {
-        return MethodMap.Lookup((long)methodStart - GameAssemblyBase);
+        return MethodMap.Lookup(methodStart - GameAssemblyBase);
     }
 
     internal static IEnumerable<XrefInstance> ListUsers(CachedScanResultsAttribute attribute)

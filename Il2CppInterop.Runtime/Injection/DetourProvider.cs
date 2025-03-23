@@ -1,30 +1,25 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Il2CppInterop.Runtime.Startup;
+using MonoMod.Core;
 
 namespace Il2CppInterop.Runtime.Injection;
 
-public interface IDetour : IDisposable
-{
-    nint Target { get; }
-    nint Detour { get; }
-    nint OriginalTrampoline { get; }
-
-    void Apply();
-    T GenerateTrampoline<T>() where T : Delegate;
-}
-
-public interface IDetourProvider
-{
-    IDetour Create<TDelegate>(nint original, TDelegate target) where TDelegate : Delegate;
-}
-
 internal static class Detour
 {
-    public static IDetour Apply<T>(nint original, T target, out T trampoline) where T : Delegate
+    public static IDisposable Apply(nint original, Delegate target, out nint trampoline)
     {
-        var detour = Il2CppInteropRuntime.Instance.DetourProvider.Create(original, target);
-        trampoline = detour.GenerateTrampoline<T>();
-        detour.Apply();
+        var factory = Il2CppInteropRuntime.Instance.DetourFactory ?? DetourFactory.Current;
+        var detour = factory.CreateNativeDetour(original, Marshal.GetFunctionPointerForDelegate(target));
+        trampoline = detour.OrigEntrypoint;
+        return detour;
+    }
+
+    public static IDisposable Apply<T>(nint original, T target, out T trampoline) where T : Delegate
+    {
+        var factory = Il2CppInteropRuntime.Instance.DetourFactory ?? DetourFactory.Current;
+        var detour = factory.CreateNativeDetour(original, Marshal.GetFunctionPointerForDelegate(target));
+        trampoline = Marshal.GetDelegateForFunctionPointer<T>(detour.OrigEntrypoint);
         return detour;
     }
 }

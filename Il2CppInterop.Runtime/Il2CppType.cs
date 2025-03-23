@@ -31,12 +31,12 @@ public static class Il2CppType
         return Type.internal_from_handle(il2CppType);
     }
 
-    public static Type From(System.Type type)
+    public static Type? From(System.Type type)
     {
         return From(type, true);
     }
 
-    public static Type From(System.Type type, bool throwOnFailure)
+    public static Type? From(System.Type type, bool throwOnFailure)
     {
         var pointer = Il2CppClassPointerStore.GetNativeClassPointer(type);
         return TypeFromPointerInternal(pointer, type.Name, throwOnFailure);
